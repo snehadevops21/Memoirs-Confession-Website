@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PenTool, BookOpen, ChevronRight, Lock, Flame, Heart, MessageSquare, ShieldAlert } from "lucide-react";
 
 export default function ConfessionLevels() {
   const [activeTier, setActiveTier] = useState(null);
-  const feedRef = useRef(null);
 
   const tiers = [
     {

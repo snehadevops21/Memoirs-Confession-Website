@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Search, Filter, MessageSquareHeart } from "lucide-react";
 import { supabase } from "../config/supabaseClient"; // Import client
-import ReactPlayer from 'react-player';
+
 
 export default function ExploreFeed() {
   // Curated premium mock data array representing safe public secrets
   const [confessions, setConfessions] = useState([]);
     
 
-  const [loading, setLoading] = useState(true);
   // Fetch from live database on mount
   useEffect(() => {
     const fetchConfessions = async () => {
@@ -17,10 +16,16 @@ export default function ExploreFeed() {
         .from('confessions')
         .select('*')
         .order('created_at', { ascending: false }); // Latest posts first
-if (data) {
-    setConfessions(data); // This now correctly replaces the empty array with your DB data
-  }
-};
+
+      if (error) {
+        console.error("Error fetching confessions:", error);
+        return;
+      }
+
+      if (data) {
+        setConfessions(data); // This now correctly replaces the empty array with your DB data
+      }
+    };
 
     fetchConfessions();
 

@@ -1,12 +1,25 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion"; 
-import { Send, EyeOff, Sparkles, CheckCircle2 } from "lucide-react";
+import { motion} from "framer-motion"; 
+import { Send, EyeOff, Sparkles} from "lucide-react";
 import { supabase } from "../config/supabaseClient";
 
 export default function ConfessionForm() {
   const [nickname, setNickname] = useState("");
-  const [country, setCountry] = useState("");
-  const [level, setLevel] = useState("Level 1 — Secret Crush 💌");
+  // Initialize from localStorage to avoid synchronous setState inside an effect
+  const [country, setCountry] = useState(() => {
+    try {
+      return localStorage.getItem("selected_confession_country") || "";
+    } catch {
+      return "";
+    }
+  });
+  const [level, setLevel] = useState(() => {
+    try {
+      return localStorage.getItem("selected_confession_tier") || "Level 1 — Secret Crush 💌";
+    } catch {
+      return "Level 1 — Secret Crush 💌";
+    }
+  });
   const [message, setMessage] = useState("");
   const [mood, setMood] = useState("🌙");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,12 +28,7 @@ export default function ConfessionForm() {
   // Sync state with localstorage values managed by the tracking map grid
 // Sync state with localstorage values managed by the tracking map grid
   useEffect(() => {
-    // 1. Initial Load from LocalStorage
-    const savedTier = localStorage.getItem("selected_confession_tier");
-    const savedCountry = localStorage.getItem("selected_confession_country");
-    
-    if (savedTier) setLevel(savedTier);
-    if (savedCountry) setCountry(savedCountry);
+    // Initial values are read during state initialization. Effect only sets up listeners.
 
     // 2. Listeners for Cross-Component Communication
     const handleTierUpdate = () => {

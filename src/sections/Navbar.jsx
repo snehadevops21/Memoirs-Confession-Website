@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { Music, VolumeX } from "lucide-react";
+import { Music, VolumeX, Heart } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,6 +18,13 @@ export default function Navbar() {
     }
   };
 
+// Scroll function to jump to the ConfessionForm
+  const scrollToConfessionForm = () => {
+    const formElement = document.getElementById("confession-input-form");
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <motion.nav 
@@ -44,8 +51,20 @@ export default function Navbar() {
         </span>
       </motion.div>
 
-      {/* Music Toggle Area */}
-      <div className="flex items-center gap-6">
+{/* Right Controls Area: Music Toggle + Confess CTA */}
+      <div className="flex items-center gap-4">
+        {/* Confess Your Feeling CTA Button */}
+        <motion.button
+          onClick={scrollToConfessionForm}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all cursor-pointer"
+        >
+          <Heart className="w-3.5 h-3.5 fill-current" />
+          <span>Confess Your Feeling</span>
+        </motion.button>
+
+        {/* Music Toggle Area */}
         <motion.button
           onClick={toggleMusic}
           whileHover={{ scale: 1.05 }}

@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { Shield, HeartHandshake, Eye, Sparkles } from "lucide-react";
 
 export default function Footer() {
