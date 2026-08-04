@@ -4,17 +4,35 @@ import { Music, VolumeX, Heart } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef(null);
+
+  // Attempt to autoplay muted on mount
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = true;
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+          setIsMuted(true);
+        })
+        .catch(err => console.log("Autoplay blocked:", err));
+    }
+  }, []);
 
   // Toggle playback and handle audio logic
   const toggleMusic = () => {
     if (audioRef.current) {
-      if (isPlaying) {
+      if (isPlaying && isMuted) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play().catch(err => console.log("Audio playback failed:", err));
+        // If it's paused or muted, play and unmute
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(err => console.log("Playback failed:", err));
+        setIsPlaying(true);
+        setIsMuted(false);
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
