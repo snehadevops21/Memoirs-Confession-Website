@@ -21,7 +21,7 @@ export default function Hero() {
       className="relative w-full pt-6 pb-8 flex flex-col items-center justify-center overflow-hidden bg-[#05020a]"
     >
       {/* Ambient background glows to absorb any empty space beautifully */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-600px h-350px rounded-full bg-linear-to-r from-neon-purple/10 to-neon-pink/5 blur-[140px] -z-10 pointer-events-none" />
+      <div className="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 w-600px h-350px rounded-full bg-linear-to-r from-neon-purple/10 to-neon-pink/5 blur-[140px] -z-10 pointer-events-none" />
       
       {/* Main Animated Logo Stage */}
       <div className="relative w-72 h-72 -mt-6 sm:-mt-10 flex items-center justify-center select-none scale-110 sm:scale-125">
