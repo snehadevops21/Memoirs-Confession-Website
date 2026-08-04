@@ -1,11 +1,28 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Heart, Sparkles, X, Globe2 } from "lucide-react";
+import { Music, VolumeX, Heart, Sparkles, X, Globe2, Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMusicPrompt, setShowMusicPrompt] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const audioRef = useRef(null);
+
+  // Handle Theme Change on root document
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDarkMode) {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const startMusic = () => {
     if (audioRef.current) {
@@ -104,7 +121,7 @@ export default function Navbar() {
         </motion.div>
 
         {/* Right Controls Area */}
-<div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
           {/* Explore Feed Navigation Button */}
           <motion.button
             onClick={scrollToExploreFeed}
@@ -125,6 +142,17 @@ export default function Navbar() {
           >
             <Heart className="w-3.5 h-3.5 fill-current" />
             <span>Confess Your Feeling</span>
+          </motion.button>
+
+          {/* Theme Switcher Toggle */}
+          <motion.button
+            onClick={toggleTheme}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="p-2.5 rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+            title="Toggle Light/Dark Mode"
+          >
+            {isDarkMode ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
           </motion.button>
 
 {/* Music Toggle Area */}
