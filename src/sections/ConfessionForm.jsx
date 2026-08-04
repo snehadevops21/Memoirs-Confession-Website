@@ -97,7 +97,7 @@ const handleSubmit = async (e) => {
 };
 
   return (
-    <section id="confession-input-form" className="py-24 px-6 relative max-w-4xl mx-auto border-t border-white/5">
+    <section id="confession-input-form" className="py-8 px-3 relative max-w-4xl mx-auto border-t border-white/5">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-400px h-400px rounded-full bg-neon-pink/5 blur-[100px] -z-10 pointer-events-none" />
 
       {/* Header Info Banner */}

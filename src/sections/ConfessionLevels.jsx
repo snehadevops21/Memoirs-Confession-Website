@@ -88,7 +88,7 @@ const handleReadRoute = () => {
 };
 
   return (
-    <section id="confession-tiers" className="py-24 px-6 relative max-w-4xl mx-auto border-t border-white/5">
+    <section id="confession-tiers" className="py-8 px-3 relative max-w-4xl mx-auto border-t border-white/5">
       {/* Background Ambience Layout */}
       <div className="absolute bottom-1/4 left-10 w-300px h-300px rounded-full bg-neon-purple/5 blur-[100px] -z-10 pointer-events-none" />
 

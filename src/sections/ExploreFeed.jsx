@@ -78,7 +78,7 @@ export default function ExploreFeed() {
   });
 
   return (
-    <section id= "explore-feed" className="py-24 px-6 relative max-w-6xl mx-auto border-t border-white/5">
+    <section id= "explore-feed" className="py-8 px-3 relative max-w-6xl mx-auto border-t border-white/5">
       {/* Header Controls Interface Layout */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12">
         <div>

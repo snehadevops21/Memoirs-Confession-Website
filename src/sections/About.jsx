@@ -21,7 +21,7 @@ export default function About() {
   ];
 
   return (
-    <section className="py-10 px-3 relative max-w-6xl mx-auto border-t border-white/5">
+    <section className="py-8 px-3 relative max-w-6xl mx-auto border-t border-white/5">
       {/* Scroll-triggered Header Container */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}

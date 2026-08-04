@@ -119,7 +119,7 @@ export default function WorldMap() {
   );
 
   return (
-    <section id="world-matrix" className="py-24 px-6 relative max-w-7xl mx-auto border-t border-white/5">
+    <section id="world-matrix" className="py-8 px-3 relative max-w-7xl mx-auto border-t border-white/5">
       <div className="absolute top-1/4 right-1/4 w-350px h-350px rounded-full bg-neon-purple/5 blur-[120px] -z-10 pointer-events-none" />
 
       {/* Header Info Deck */}

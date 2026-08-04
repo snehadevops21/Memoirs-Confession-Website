@@ -22,7 +22,7 @@ export default function MidnightQuotes() {
   }, [quotes.length]);
 
   return (
-    <section className="py-32 px-6 relative max-w-5xl mx-auto border-t border-white/5 overflow-hidden text-center flex flex-col items-center justify-center min-h-[40vh]">
+    <section className="py-8 px-3 relative max-w-5xl mx-auto border-t border-white/5 overflow-hidden text-center flex flex-col items-center justify-center min-h-[40vh]">
       {/* 1. Immersive Midnight Star Field Background overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px 24px] opacity-60 pointer-events-none" />
       
