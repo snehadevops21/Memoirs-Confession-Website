@@ -17,12 +17,3 @@ html {
 }
 
 
-/* Optional custom theme background rules */
-body {
-  @apply bg-midnight text-white transition-colors duration-300;
-}
-
-/* Light mode overrides when dark class is removed */
-html:not(.dark) body {
-  @apply bg-slate-50 text-slate-900;
-}
