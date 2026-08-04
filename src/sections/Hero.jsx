@@ -13,17 +13,13 @@ export default function Hero() {
     },
   };
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 1, ease: [0.16, 1, 0.3, 1] }, // Premium ease-out curve
-    },
-  };
-
-return (
-<div className="relative w-full pt-6 pb-8 flex flex-col items-center justify-center overflow-hidden bg-[#05020a]">
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="relative w-full pt-6 pb-8 flex flex-col items-center justify-center overflow-hidden bg-[#05020a]"
+    >
       {/* Ambient background glows to absorb any empty space beautifully */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-600px h-350px rounded-full bg-linear-to-r from-neon-purple/10 to-neon-pink/5 blur-[140px] -z-10 pointer-events-none" />
       
@@ -109,6 +105,6 @@ return (
           Memoirs
         </h1>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
