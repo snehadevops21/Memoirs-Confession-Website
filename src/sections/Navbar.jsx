@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Music, VolumeX, Heart } from "lucide-react";
 
@@ -17,6 +17,33 @@ export default function Navbar() {
       setIsPlaying(!isPlaying);
     }
   };
+
+  // Automatically start music on the very first user interaction (click/touch anywhere)
+  useEffect(() => {
+    const handleFirstInteraction = () => {
+      if (audioRef.current && audioRef.current.paused) {
+        audioRef.current.play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(err => console.log("Autoplay blocked by browser policy:", err));
+      }
+      // Clean up listeners after the first interaction fires successfully
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("scroll", handleFirstInteraction);
+    };
+
+    window.addEventListener("click", handleFirstInteraction);
+    window.addEventListener("keydown", handleFirstInteraction);
+    window.addEventListener("scroll", handleFirstInteraction);
+
+    return () => {
+      window.removeEventListener("click", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
+      window.removeEventListener("scroll", handleFirstInteraction);
+    };
+  }, []);
 
 // Scroll function to jump to the ConfessionForm
   const scrollToConfessionForm = () => {
