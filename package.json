@@ -17,7 +17,6 @@
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-player": "^3.4.0",
-    "react-simple-maps": "^3.0.0",
     "simple-statistics": "^7.8.9"
   },
   "devDependencies": {
