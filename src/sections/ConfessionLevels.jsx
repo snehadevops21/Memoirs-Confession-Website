@@ -93,7 +93,7 @@ const handleReadRoute = () => {
       <div className="absolute bottom-1/4 left-10 w-300px h-300px rounded-full bg-neon-purple/5 blur-[100px] -z-10 pointer-events-none" />
 
       {/* Header Deck */}
-      <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+      <div className="text-center max-w-3xl mx-auto mb-8 space-y-3">
         <h2 className="text-xs font-semibold tracking-widest uppercase text-neon-pink">Resonance Matrix</h2>
         <h3 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">Explore the Confession Tiers</h3>
         <p className="text-gray-400 font-light text-sm max-w-xl mx-auto">
