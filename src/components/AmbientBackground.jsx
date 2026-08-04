@@ -22,8 +22,19 @@ export default function AmbientBackground() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // Generate 20 random positions for floating particles
-  const particles = Array.from({ length: 20 });
+  // Generate 20 random positions for floating particles on mount.
+  // Use lazy initial state to avoid calling setState synchronously inside an effect.
+  const [particles] = useState(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      randomX: Math.random() * 100,
+      randomY: Math.random() * 100,
+      randomScale: Math.random() * 3 + 1,
+      randomDuration: Math.random() * 20 + 10,
+      // Precompute a horizontal offset to avoid calling Math.random during render
+      randomOffsetX: Math.random() * 40 - 20,
+    }))
+  );
 
   return (
     <div className="fixed inset-0 -z-50 bg-midnight overflow-hidden select-none pointer-events-none">
@@ -38,15 +49,11 @@ export default function AmbientBackground() {
       <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-neon-pink/5 blur-[120px] animate-pulse-slow" />
 
       {/* 3. Floating Cinematic Particles */}
-      {particles.map((_, i) => {
-        const randomX = Math.random() * 100;
-        const randomY = Math.random() * 100;
-        const randomScale = Math.random() * 3 + 1;
-        const randomDuration = Math.random() * 20 + 10;
+      {particles.map(({ id, randomX, randomY, randomScale, randomDuration, randomOffsetX }) => {
 
         return (
           <motion.div
-            key={i}
+            key={id}
             className="absolute rounded-full bg-white/25 blur-[1px]"
             style={{
               width: randomScale,
@@ -56,7 +63,7 @@ export default function AmbientBackground() {
             }}
             animate={{
               y: [0, -100, 0],
-              x: [0, Math.random() * 40 - 20, 0],
+              x: [0, randomOffsetX, 0],
               opacity: [0.1, 0.7, 0.1],
             }}
             transition={{
