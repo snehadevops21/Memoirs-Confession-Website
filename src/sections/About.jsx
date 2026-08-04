@@ -42,7 +42,7 @@ export default function About() {
       </motion.div>
 
 {/* 3-Column Professional Grid Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 max-w-2xl mx-auto">
         {cardData.map((card, index) => (
           <motion.div
             key={index}
