@@ -1,0 +1,79 @@
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Music, VolumeX } from "lucide-react";
+
+export default function Navbar() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  // Toggle playback and handle audio logic
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(err => console.log("Audio playback failed:", err));
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+
+  return (
+    <motion.nav 
+      initial={{ y: -50, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="fixed top-0 left-0 w-full z-50 px-6 py-4 md:px-12 flex items-center justify-between bg-midnight/30 backdrop-blur-md border-b border-white/5"
+    >
+      {/* Hidden Audio Element */}
+      <audio ref={audioRef} loop src="/music.mp3" />
+
+      {/* Logo Area */}
+      <motion.div 
+        whileHover={{ scale: 1.02 }}
+        className="flex items-center gap-2 cursor-pointer"
+      >
+        <img 
+          src="logo.png" 
+          alt="Logo" 
+          className="h-10 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]" 
+        />
+        <span className="text-xl font-bold tracking-widest text-transparent bg-clip-text bg-linear-to-r from-white via-purple-300 to-white/80 filter drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+          MEMOIRS
+        </span>
+      </motion.div>
+
+      {/* Music Toggle Area */}
+      <div className="flex items-center gap-6">
+        <motion.button
+          onClick={toggleMusic}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 border backdrop-blur-sm cursor-pointer ${
+            isPlaying 
+              ? "bg-neon-purple/10 border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(168,85,247,0.2)]" 
+              : "bg-white/5 border-white/10 text-gray-400 hover:text-white"
+          }`}
+        >
+          {isPlaying ? (
+            <>
+              <motion.span 
+                animate={{ scale: [1, 1.3, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+                className="w-1.5 h-1.5 bg-neon-purple rounded-full"
+              />
+              <Music className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Ambient On</span>
+            </>
+          ) : (
+            <>
+              <VolumeX className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Audio Muted</span>
+            </>
+          )}
+        </motion.button>
+      </div>
+    </motion.nav>
+  );
+}
