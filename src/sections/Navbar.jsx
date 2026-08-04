@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Heart, Sparkles, X } from "lucide-react";
+import { Music, VolumeX, Heart, Sparkles, X, Globe2 } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -31,10 +31,19 @@ export default function Navbar() {
     }
   };
 
+  // Scroll function to jump to the Confession Form
   const scrollToConfessionForm = () => {
     const formElement = document.getElementById("confession-input-form");
     if (formElement) {
       formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // Scroll function to jump to the Explore Feed
+  const scrollToExploreFeed = () => {
+    const feedElement = document.getElementById("explore-feed");
+    if (feedElement) {
+      feedElement.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
 
@@ -95,7 +104,19 @@ export default function Navbar() {
         </motion.div>
 
         {/* Right Controls Area */}
-        <div className="flex items-center gap-4">
+<div className="flex items-center gap-3">
+          {/* Explore Feed Navigation Button */}
+          <motion.button
+            onClick={scrollToExploreFeed}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="hidden lg:flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-neon-purple" />
+            <span>Explore Feed</span>
+          </motion.button>
+
+          {/* Confess Your Feeling CTA Button */}
           <motion.button
             onClick={scrollToConfessionForm}
             whileHover={{ scale: 1.05 }}
@@ -106,6 +127,7 @@ export default function Navbar() {
             <span>Confess Your Feeling</span>
           </motion.button>
 
+{/* Music Toggle Area */}
           <motion.button
             onClick={toggleMusic}
             whileHover={{ scale: 1.05 }}
