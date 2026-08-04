@@ -41,8 +41,8 @@ export default function About() {
         </p>
       </motion.div>
 
-{/* 1-Column Stacked Row Format */}
-      <div className="grid grid-cols-1 gap-6">
+{/* 3 Columns in 1 Row Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {cardData.map((card, index) => (
           <motion.div
             key={index}
@@ -50,17 +50,19 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.15 }}
-            whileHover={{ x: 5, transition: { duration: 0.2 } }}
-            className="p-8 rounded-3xl bg-white/0.02 border border-white/5 backdrop-blur-xl hover:border-white/10 hover:bg-white/0.04 transition-all duration-300 group shadow-2xl flex items-start gap-6"
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            className="p-8 rounded-3xl bg-white/0.02 border border-white/5 backdrop-blur-xl hover:border-white/10 hover:bg-white/0.04 transition-all duration-300 group shadow-2xl flex flex-col justify-between"
           >
-            {/* Icon Box Container */}
-            <div className="w-14 h-14 shrink-0 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:scale-110 group-hover:border-neon-purple/30 transition-all duration-300 shadow-inner">
-              {card.icon}
-            </div>
-            
-            {/* Text Content */}
             <div>
-              <h4 className="text-xl font-semibold text-white mb-2 tracking-wide">{card.title}</h4>
+              {/* Icon Box Container */}
+              <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-neon-purple/30 transition-all duration-300 shadow-inner">
+                {card.icon}
+              </div>
+              
+              {/* Title */}
+              <h4 className="text-xl font-semibold text-white mb-3 tracking-wide">{card.title}</h4>
+              
+              {/* Description */}
               <p className="text-gray-400 font-light text-sm leading-relaxed">{card.desc}</p>
             </div>
           </motion.div>
