@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Heart, Sparkles, X, Globe2, Menu, Layers, BookOpen, Moon } from "lucide-react";
+import { Music, VolumeX, Heart, Sparkles, X, Globe2, Menu, Layers, BookOpen, Moon, Info } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -86,15 +86,13 @@ export default function Navbar() {
 
         {/* Desktop Controls */}
         <div className="hidden lg:flex items-center gap-2.5">
-
           <button
             onClick={() => scrollToSection("about-section")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
-            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            <Info className="w-3.5 h-3.5 text-purple-400" />
             <span>About</span>
           </button>
-
 
           <button
             onClick={() => scrollToSection("explore-feed")}
@@ -121,15 +119,6 @@ export default function Navbar() {
           </button>
 
           <button
-            onClick={() => scrollToSection("world-matrix")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
-          >
-            <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
-            <span>World Map</span>
-          </button>
-
-
-          <button
             onClick={() => scrollToSection("memory-wall")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
@@ -143,6 +132,14 @@ export default function Navbar() {
           >
             <Moon className="w-3.5 h-3.5 text-indigo-400" />
             <span>Quotes</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("world-map")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
+            <span>World Map</span>
           </button>
 
           <button
@@ -178,7 +175,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Dropdown Drawer Menu (Dynamic positioning clears the announcement banner) */}
+      {/* Mobile Dropdown Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -186,9 +183,17 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
-              showMusicPrompt ? "top-17" : "top-14"
+              showMusicPrompt ? "top-17 md:top-19" : "top-14"
             }`}
           >
+            <button
+              onClick={() => scrollToSection("about-section")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Info className="w-4 h-4 text-purple-400" />
+              <span>About</span>
+            </button>
+
             <button
               onClick={() => scrollToSection("explore-feed")}
               className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
@@ -206,7 +211,7 @@ export default function Navbar() {
             </button>
 
             <button
-              onClick={() => scrollToSection("confession-tiers")}
+              onClick={() => scrollToSection("confession-levels")}
               className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
             >
               <Layers className="w-4 h-4 text-neon-pink" />
@@ -227,6 +232,14 @@ export default function Navbar() {
             >
               <Moon className="w-4 h-4 text-indigo-400" />
               <span>Midnight Quotes</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("world-map")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Globe2 className="w-4 h-4 text-neon-pink" />
+              <span>World Map</span>
             </button>
           </motion.div>
         )}
