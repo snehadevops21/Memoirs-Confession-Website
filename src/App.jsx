@@ -17,7 +17,9 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="relative min-h-screen text-white font-sans antialiased selection:bg-neon-purple/30 overflow-x-hidden">
+<div className="min-h-screen bg-[#0b0f19] text-white selection:bg-neon-purple selection:text-white relative overflow-x-hidden">
+      {/* Navbar handles the fixed top banner and navigation */}
+      <Navbar />
       {/* Immersive Background Layer */}
       <AmbientBackground />
 
@@ -25,7 +27,7 @@ function App() {
       <Navbar isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
       {/* Main Content Sections Wrapper */}
-      <main className="relative z-10 pt-16">
+      <main className="pt-20 md:pt-24">
         <Hero />
         <About />
         <ConfessionLevels />
