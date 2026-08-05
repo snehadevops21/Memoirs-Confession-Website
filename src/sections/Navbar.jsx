@@ -11,6 +11,7 @@ export default function Navbar() {
   const startMusic = () => {
     setShowMusicPrompt(false);
     if (audioRef.current) {
+      audioRef.current.currentTime = 0;
       audioRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(err => console.log("Playback failed:", err));
@@ -38,35 +39,27 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
-      <audio ref={audioRef} loop src="/music.mp3" muted={!isPlaying} />
+      <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
 
       {/* Music Prompt Banner */}
-      <AnimatePresence>
-        {showMusicPrompt && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center overflow-hidden"
+      {showMusicPrompt && (
+        <div className="w-full bg-gradient-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center">
+          <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
+          <span className="truncate">Want to immerse with ambient music?</span>
+          <button
+            onClick={startMusic}
+            className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
           >
-            <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
-            <span className="truncate">Want to immerse with ambient music?</span>
-            <button
-              onClick={startMusic}
-              className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
-            >
-              Play 🎵
-            </button>
-            <button
-              onClick={() => setShowMusicPrompt(false)}
-              className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer shrink-0"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Play 🎵
+          </button>
+          <button
+            onClick={() => setShowMusicPrompt(false)}
+            className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer shrink-0"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      )}
 
       {/* Main Navbar */}
       <nav className="w-full px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b bg-[#0b0f19]/80 border-white/5 transition-all">
