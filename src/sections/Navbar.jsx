@@ -9,11 +9,12 @@ export default function Navbar() {
   const audioRef = useRef(null);
 
   const startMusic = () => {
-    setShowMusicPrompt(false);
     if (audioRef.current) {
-      audioRef.current.currentTime = 0;
       audioRef.current.play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true);
+          setShowMusicPrompt(false);
+        })
         .catch(err => console.log("Playback failed:", err));
     }
   };
@@ -38,31 +39,43 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full z-50">
-      <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
-
-      {/* Music Prompt Banner - Completely removed when hidden or play is clicked */}
-      {showMusicPrompt && (
-        <div className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center">
-          <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
-          <span className="truncate">Want to immerse with ambient music?</span>
-          <button
-            onClick={startMusic}
-            className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
+    <>
+      <AnimatePresence>
+        {showMusicPrompt && (
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -50, opacity: 0 }}
+            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
           >
-            Play 🎵
-          </button>
-          <button
-            onClick={() => setShowMusicPrompt(false)}
-            className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer shrink-0"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      )}
+            <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
+            <span className="truncate">Want to immerse with ambient music?</span>
+            <button
+              onClick={startMusic}
+              className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
+            >
+              Play 🎵
+            </button>
+            <button
+              onClick={() => setShowMusicPrompt(false)}
+              className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer shrink-0"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Main Navbar */}
-      <nav className="w-full px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b bg-[#0b0f19]/80 border-white/5 transition-all">
+      <motion.nav 
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className={`fixed left-0 w-full z-50 px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b transition-all duration-300 ${
+          showMusicPrompt ? "top-8 md:top-10" : "top-0"
+        } bg-[#0b0f19]/80 border-white/5`}
+      >
+        <audio ref={audioRef} loop src="/music.mp3" />
+
         {/* Logo Area */}
         <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src="logo.png" alt="Logo" className="h-8 w-auto md:h-10 object-contain" />
@@ -98,7 +111,7 @@ export default function Navbar() {
           </button>
 
           <button
-            onClick={() => scrollToSection("confession-levels")}
+            onClick={() => scrollToSection("confession-tiers")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
             <Layers className="w-3.5 h-3.5 text-neon-pink" />
@@ -122,7 +135,7 @@ export default function Navbar() {
           </button>
 
           <button
-            onClick={() => scrollToSection("world-map")}
+            onClick={() => scrollToSection("world-matrix")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
             <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
@@ -160,16 +173,18 @@ export default function Navbar() {
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Dropdown Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute inset-x-0 top-full bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden"
+            exit={{ opacity: 0, y: -20 }}
+            className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
+              showMusicPrompt ? "top-17 md:top-19" : "top-14"
+            }`}
           >
             <button
               onClick={() => scrollToSection("about-section")}
@@ -196,7 +211,7 @@ export default function Navbar() {
             </button>
 
             <button
-              onClick={() => scrollToSection("confession-levels")}
+              onClick={() => scrollToSection("confession-tiers")}
               className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
             >
               <Layers className="w-4 h-4 text-neon-pink" />
@@ -220,7 +235,7 @@ export default function Navbar() {
             </button>
 
             <button
-              onClick={() => scrollToSection("world-map")}
+              onClick={() => scrollToSection("world-matrix")}
               className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
             >
               <Globe2 className="w-4 h-4 text-neon-pink" />
@@ -229,6 +244,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
