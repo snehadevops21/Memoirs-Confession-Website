@@ -1,12 +1,20 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Search, Filter, MessageSquareHeart } from "lucide-react";
+import { Heart, Search, Filter, MessageSquareHeart, ChevronLeft, ChevronRight } from "lucide-react";
 import { supabase } from "../config/supabaseClient"; // Import client
 
 
 export default function ExploreFeed() {
   // Curated premium mock data array representing safe public secrets
   const [confessions, setConfessions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  // Pagination States (Set to 5 items per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const categories = ["All", "Crush 💌", "Untold 🌙", "Deep ❤️", "Regret 🥀", "Stories 📖"];
     
 
   // Fetch from live database on mount
@@ -42,12 +50,6 @@ export default function ExploreFeed() {
     };
   }, []);
 
-  
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeFilter, setActiveFilter] = useState("All");
-
-  const categories = ["All", "Crush 💌", "Untold 🌙", "Deep ❤️", "Regret 🥀", "Stories 📖"];
-
   // Heart support reaction click counter logic
   const handleLike = (id) => {
     setConfessions(prev => prev.map(item => {
@@ -76,6 +78,18 @@ export default function ExploreFeed() {
     if (activeFilter === "Stories 📖") return matchesSearch && item.level.includes("Level 5");
     return matchesSearch;
   });
+
+  // Pagination Math Logic (5 items per page)
+  const totalPages = Math.ceil(filteredConfessions.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentConfessions = filteredConfessions.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      document.getElementById("explore-feed")?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section id= "explore-feed" className="py-8 px-3 relative max-w-6xl mx-auto border-t border-white/5">
@@ -120,7 +134,7 @@ export default function ExploreFeed() {
       {/* Modern Asymmetric Masonry Column Feed Layout */}
       <motion.div layout className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         <AnimatePresence mode="popLayout">
-          {filteredConfessions.map((post) => (
+          {currentConfessions.map((post) => (
             
             <motion.div
               layout
@@ -146,7 +160,7 @@ export default function ExploreFeed() {
                   </span>
                 </div>
 
-                {/* Main Content Quote */}
+               {/* Main Content Quote */}
                 <p className="text-gray-300 text-sm font-light leading-relaxed tracking-wide italic">
                   "{post.message}"
                 </p>
@@ -196,6 +210,42 @@ export default function ExploreFeed() {
           No echoes found under this specific emotional category yet...
         </motion.div>
       )}
+
+      {/* Pagination Footer Controls */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-16 pt-6 border-t border-white/5">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`flex items-center gap-1 px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer border ${
+              currentPage === 1
+                ? "opacity-40 cursor-not-allowed bg-transparent border-white/5 text-gray-500"
+                : "bg-white/5 border-white/10 text-white hover:bg-neon-purple/20"
+            }`}
+          >
+            <ChevronLeft className="w-4 h-4" />
+            <span>Previous</span>
+          </button>
+
+          <span className="text-xs font-mono text-gray-400 tracking-wider">
+            Page <strong className="text-white">{currentPage}</strong> of {totalPages}
+          </span>
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`flex items-center gap-1 px-4 py-2 rounded-full text-xs font-medium transition-all cursor-pointer border ${
+              currentPage === totalPages
+                ? "opacity-40 cursor-not-allowed bg-transparent border-white/5 text-gray-500"
+                : "bg-white/5 border-white/10 text-white hover:bg-neon-purple/20"
+            }`}
+          >
+            <span>Next</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
+
     </section>
   );
 }
