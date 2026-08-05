@@ -12,9 +12,7 @@ export default function Navbar() {
     setShowMusicPrompt(false);
     if (audioRef.current) {
       audioRef.current.play()
-        .then(() => {
-          setIsPlaying(true);
-        })
+        .then(() => setIsPlaying(true))
         .catch(err => console.log("Playback failed:", err));
     }
   };
@@ -39,7 +37,10 @@ export default function Navbar() {
   };
 
   return (
-    <>
+    <header className="fixed top-0 left-0 w-full z-50">
+      <audio ref={audioRef} loop src="/music.mp3" muted={!isPlaying} />
+
+      {/* Music Prompt Banner */}
       <AnimatePresence>
         {showMusicPrompt && (
           <motion.div
@@ -47,7 +48,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center overflow-hidden"
+            className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center overflow-hidden"
           >
             <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
             <span className="truncate">Want to immerse with ambient music?</span>
@@ -67,13 +68,8 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <motion.nav 
-        className={`fixed left-0 w-full z-50 px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b transition-all duration-300 ${
-          showMusicPrompt ? "top: 37px md:top: 37px" : "top-0"
-        } bg-[#0b0f19]/80 border-white/5`}
-      >
-        <audio ref={audioRef} loop src="/music.mp3" muted={!isPlaying} />
-
+      {/* Main Navbar */}
+      <nav className="w-full px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b bg-[#0b0f19]/80 border-white/5 transition-all">
         {/* Logo Area */}
         <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src="logo.png" alt="Logo" className="h-8 w-auto md:h-10 object-contain" />
@@ -171,7 +167,7 @@ export default function Navbar() {
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Dropdown Drawer Menu */}
       <AnimatePresence>
@@ -180,9 +176,7 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
-              showMusicPrompt ? "top: 96px" : "top-14"
-            }`}
+            className="absolute inset-x-0 top-full bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden"
           >
             <button
               onClick={() => scrollToSection("about-section")}
@@ -242,6 +236,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   );
 }
