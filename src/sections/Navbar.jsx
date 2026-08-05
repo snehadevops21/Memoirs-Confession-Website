@@ -46,7 +46,7 @@ export default function Navbar() {
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
-            className="fixed top-0 left-0 w-full z-60 bg-gradient-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
+            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
           >
             <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
             <span className="truncate">Want to immerse with ambient music?</span>
@@ -86,6 +86,16 @@ export default function Navbar() {
 
         {/* Desktop Controls */}
         <div className="hidden lg:flex items-center gap-2.5">
+
+          <button
+            onClick={() => scrollToSection("about-section")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-purple-400" />
+            <span>About</span>
+          </button>
+
+
           <button
             onClick={() => scrollToSection("explore-feed")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
@@ -96,7 +106,7 @@ export default function Navbar() {
 
           <button
             onClick={() => scrollToSection("confession-input-form")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-gradient-to-r from-neon-purple to-neon-pink text-white shadow-md transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md transition-all cursor-pointer"
           >
             <Heart className="w-3.5 h-3.5 fill-current" />
             <span>Confess</span>
@@ -109,6 +119,15 @@ export default function Navbar() {
             <Layers className="w-3.5 h-3.5 text-neon-pink" />
             <span>Levels</span>
           </button>
+
+          <button
+            onClick={() => scrollToSection("world-matrix")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
+            <span>World Map</span>
+          </button>
+
 
           <button
             onClick={() => scrollToSection("memory-wall")}
@@ -167,7 +186,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
-              showMusicPrompt ? "top-[68px] md:top-[76px]" : "top-14"
+              showMusicPrompt ? "top-17" : "top-14"
             }`}
           >
             <button
@@ -180,7 +199,7 @@ export default function Navbar() {
 
             <button
               onClick={() => scrollToSection("confession-input-form")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase bg-gradient-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
             >
               <Heart className="w-4 h-4 fill-current" />
               <span>Confess Your Feeling</span>
