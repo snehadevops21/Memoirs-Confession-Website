@@ -41,7 +41,7 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 w-full z-50">
       <audio ref={audioRef} loop src="/music.mp3" preload="auto" />
 
-      {/* Music Prompt Banner */}
+      {/* Music Prompt Banner - Completely removed when hidden or play is clicked */}
       {showMusicPrompt && (
         <div className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center">
           <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
