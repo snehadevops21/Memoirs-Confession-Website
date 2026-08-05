@@ -111,7 +111,7 @@ export default function Navbar() {
           </button>
 
           <button
-            onClick={() => scrollToSection("confession-levels")}
+            onClick={() => scrollToSection("confession-tiers")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
             <Layers className="w-3.5 h-3.5 text-neon-pink" />
@@ -135,7 +135,7 @@ export default function Navbar() {
           </button>
 
           <button
-            onClick={() => scrollToSection("world-map")}
+            onClick={() => scrollToSection("world-matrix")}
             className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
             <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
