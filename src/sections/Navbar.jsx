@@ -1,21 +1,26 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Heart, Sparkles, X, Globe2 } from "lucide-react";
+import { Music, VolumeX, Heart, Sparkles, X, Globe2, Sun, Moon, Menu } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMusicPrompt, setShowMusicPrompt] = useState(true);
-  const [isDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const audioRef = useRef(null);
 
-  // Handle Theme Change on root document
   useEffect(() => {
+    const root = document.documentElement;
     if (isDarkMode) {
-      document.documentElement.classList.add("dark");
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
   const startMusic = () => {
     if (audioRef.current) {
@@ -41,133 +46,160 @@ export default function Navbar() {
     }
   };
 
-  // Scroll function to jump to the Confession Form
   const scrollToConfessionForm = () => {
-    const formElement = document.getElementById("confession-input-form");
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    setMobileMenuOpen(false);
+    const el = document.getElementById("confession-input-form");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // Scroll function to jump to the Explore Feed
   const scrollToExploreFeed = () => {
-    const feedElement = document.getElementById("explore-feed");
-    if (feedElement) {
-      feedElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    setMobileMenuOpen(false);
+    const el = document.getElementById("explore-feed");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <>
-      {/* Music Popup Prompt Banner */}
       <AnimatePresence>
         {showMusicPrompt && (
           <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
-            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/90 via-neon-pink/90 to-purple-900/90 text-white px-4 py-2.5 flex items-center justify-center gap-3 shadow-lg backdrop-blur-md text-xs font-medium tracking-wide"
+            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
           >
-            <Sparkles className="w-4 h-4 animate-pulse" />
-            <span>Want to immerse yourself with ambient background music?</span>
+            <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
+            <span className="truncate">Want to immerse with ambient music?</span>
             <button
               onClick={startMusic}
-              className="bg-white text-gray-900 px-3 py-1 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm"
+              className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
             >
-              Play Music 🎵
+              Play 🎵
             </button>
             <button
               onClick={() => setShowMusicPrompt(false)}
-              className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer ml-2"
-              title="Dismiss"
+              className="p-1 hover:bg-white/20 rounded-full transition-all cursor-pointer shrink-0"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main Navbar */}
       <motion.nav 
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed left-0 w-full z-50 px-6 py-4 md:px-12 flex items-center justify-between bg-midnight/30 backdrop-blur-md border-b border-white/5 transition-all duration-300 ${
-          showMusicPrompt ? "top-10" : "top-0"
-        }`}
+        className={`fixed left-0 w-full z-50 px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b transition-all duration-300 ${
+          showMusicPrompt ? "top-8 md:top-10" : "top-0"
+        } bg-white/80 border-gray-200 dark:bg-[#0b0f19]/80 dark:border-white/5`}
       >
         <audio ref={audioRef} loop src="/music.mp3" />
 
         {/* Logo Area */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="flex items-center gap-2 cursor-pointer"
-        >
-          <img 
-            src="logo.png" 
-            alt="Logo" 
-            className="h-10 w-auto object-contain filter drop-shadow-[0_0_10px_rgba(168,85,247,0.3)]" 
-          />
-          <span className="text-xl font-bold tracking-widest text-transparent bg-clip-text bg-linear-to-r from-white via-purple-300 to-white/80 filter drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+        <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <img src="logo.png" alt="Logo" className="h-8 w-auto md:h-10 object-contain" />
+          <span className="text-base md:text-xl font-bold tracking-widest text-gray-900 dark:text-white">
             MEMOIRS
           </span>
-        </motion.div>
+        </div>
 
-        {/* Right Controls Area */}
-        <div className="flex items-center gap-3">
-          {/* Explore Feed Navigation Button */}
-          <motion.button
+        {/* Desktop Controls (Hidden on small mobile screens) */}
+        <div className="hidden lg:flex items-center gap-3">
+          <button
             onClick={scrollToExploreFeed}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase bg-gray-200/60 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-all cursor-pointer"
           >
             <Globe2 className="w-3.5 h-3.5 text-neon-purple" />
             <span>Explore Feed</span>
-          </motion.button>
+          </button>
 
-          {/* Confess Your Feeling CTA Button */}
-          <motion.button
+          <button
             onClick={scrollToConfessionForm}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-[0_0_15px_rgba(236,72,153,0.3)] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md transition-all cursor-pointer"
           >
             <Heart className="w-3.5 h-3.5 fill-current" />
             <span>Confess Your Feeling</span>
-          </motion.button>
+          </button>
 
+          <button
+            onClick={toggleTheme}
+            className="p-2.5 rounded-full bg-gray-200/60 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gray-700 dark:text-gray-300 transition-all cursor-pointer"
+            title="Toggle Theme"
+          >
+            {isDarkMode ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-purple-600" />}
+          </button>
 
-{/* Music Toggle Area */}
-          <motion.button
+          <button
             onClick={toggleMusic}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all duration-300 border backdrop-blur-sm cursor-pointer ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all border cursor-pointer ${
               isPlaying 
-                ? "bg-neon-purple/10 border-neon-purple/30 text-neon-purple shadow-[0_0_15px_rgba(168,85,247,0.2)]" 
-                : "bg-white/5 border-white/10 text-gray-400 hover:text-white"
+                ? "bg-neon-purple/10 border-neon-purple/30 text-neon-purple" 
+                : "bg-gray-200/60 dark:bg-white/5 border-gray-300 dark:border-white/10 text-gray-600 dark:text-gray-400"
             }`}
           >
-            {isPlaying ? (
-              <>
-                <motion.span 
-                  animate={{ scale: [1, 1.3, 1] }}
-                  transition={{ repeat: Infinity, duration: 1.5 }}
-                  className="w-1.5 h-1.5 bg-neon-purple rounded-full"
-                />
-                <Music className="w-3.5 h-3.5" />
-                <span>Ambient On</span>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span>Audio Muted</span>
-              </>
-            )}
-          </motion.button>
+            {isPlaying ? <Music className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            <span>{isPlaying ? "Ambient On" : "Muted"}</span>
+          </button>
+        </div>
+
+        {/* Mobile / Tablet Controls (Compact icon row + Hamburger) */}
+        <div className="flex lg:hidden items-center gap-2">
+          {/* Quick Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full bg-gray-200/60 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gray-700 dark:text-gray-300 cursor-pointer"
+          >
+            {isDarkMode ? <Sun className="w-3.5 h-3.5 text-yellow-400" /> : <Moon className="w-3.5 h-3.5 text-purple-600" />}
+          </button>
+
+          {/* Quick Music Toggle */}
+          <button
+            onClick={toggleMusic}
+            className={`p-2 rounded-full border transition-all cursor-pointer ${
+              isPlaying ? "bg-neon-purple/20 border-neon-purple/40 text-neon-purple" : "bg-gray-200/60 dark:bg-white/5 border-gray-300 dark:border-white/10 text-gray-500"
+            }`}
+          >
+            {isPlaying ? <Music className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+          </button>
+
+          {/* Hamburger Menu Icon */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-full bg-gray-200/60 dark:bg-white/5 border border-gray-300 dark:border-white/10 text-gray-800 dark:text-white cursor-pointer"
+          >
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
         </div>
       </motion.nav>
+
+      {/* Mobile Dropdown Drawer Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-x-0 top-16 z-40 bg-white/95 dark:bg-[#0b0f19]/95 backdrop-blur-xl border-b border-gray-200 dark:border-white/10 p-6 flex flex-col gap-4 shadow-2xl lg:hidden"
+          >
+            <button
+              onClick={scrollToExploreFeed}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-full text-xs font-medium uppercase bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-800 dark:text-white cursor-pointer"
+            >
+              <Globe2 className="w-4 h-4 text-neon-purple" />
+              <span>Explore Feed</span>
+            </button>
+
+            <button
+              onClick={scrollToConfessionForm}
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-full text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
+            >
+              <Heart className="w-4 h-4 fill-current" />
+              <span>Confess Your Feeling</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
