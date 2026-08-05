@@ -43,7 +43,7 @@ export default function Navbar() {
 
       {/* Music Prompt Banner */}
       {showMusicPrompt && (
-        <div className="w-full bg-gradient-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center">
+        <div className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center">
           <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
           <span className="truncate">Want to immerse with ambient music?</span>
           <button
