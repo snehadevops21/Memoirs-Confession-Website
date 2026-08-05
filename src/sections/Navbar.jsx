@@ -209,7 +209,6 @@ export default function Navbar() {
               <Heart className="w-4 h-4 fill-current" />
               <span>Confess Your Feeling</span>
             </button>
-            
 
             <button
               onClick={() => scrollToSection("confession-tiers")}
