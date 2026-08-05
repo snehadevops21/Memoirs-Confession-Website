@@ -40,7 +40,7 @@ export default function MemoryWall() {
   };
 
   return (
-    <section className="py-8 px-3 relative max-w-6xl mx-auto border-t border-white/5">
+    <section id="memory-wall" className="py-8 px-3 relative max-w-6xl mx-auto border-t border-white/5">
       {/* Structural Header Grid layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
         
