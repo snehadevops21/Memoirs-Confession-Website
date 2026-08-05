@@ -9,11 +9,11 @@ export default function Navbar() {
   const audioRef = useRef(null);
 
   const startMusic = () => {
+    setShowMusicPrompt(false); // Close banner immediately on first click
     if (audioRef.current) {
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true);
-          setShowMusicPrompt(false);
         })
         .catch(err => console.log("Playback failed:", err));
     }
