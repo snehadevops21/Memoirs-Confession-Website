@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Heart, Sparkles, X, Globe2, Menu } from "lucide-react";
+import { Music, VolumeX, Heart, Sparkles, X, Globe2, Menu, Layers, BookOpen, Moon, Info } from "lucide-react";
 
 export default function Navbar() {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,15 +32,9 @@ export default function Navbar() {
     }
   };
 
-  const scrollToConfessionForm = () => {
+  const scrollToSection = (id) => {
     setMobileMenuOpen(false);
-    const el = document.getElementById("confession-input-form");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const scrollToExploreFeed = () => {
-    setMobileMenuOpen(false);
-    const el = document.getElementById("explore-feed");
+    const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -91,26 +85,66 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Controls */}
-        <div className="hidden lg:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-2.5">
           <button
-            onClick={scrollToExploreFeed}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+            onClick={() => scrollToSection("about-section")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
           >
-            <Globe2 className="w-3.5 h-3.5 text-neon-purple" />
-            <span>Explore Feed</span>
+            <Info className="w-3.5 h-3.5 text-purple-400" />
+            <span>About</span>
           </button>
 
           <button
-            onClick={scrollToConfessionForm}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md transition-all cursor-pointer"
+            onClick={() => scrollToSection("explore-feed")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-neon-purple" />
+            <span>Explore</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("confession-input-form")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md transition-all cursor-pointer"
           >
             <Heart className="w-3.5 h-3.5 fill-current" />
-            <span>Confess Your Feeling</span>
+            <span>Confess</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("confession-levels")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Layers className="w-3.5 h-3.5 text-neon-pink" />
+            <span>Levels</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("memory-wall")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-purple-400" />
+            <span>Wall</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("midnight-quotes")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Moon className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Quotes</span>
+          </button>
+
+          <button
+            onClick={() => scrollToSection("world-map")}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase bg-white/5 border border-white/10 text-gray-300 hover:text-white transition-all cursor-pointer"
+          >
+            <Globe2 className="w-3.5 h-3.5 text-neon-pink" />
+            <span>World Map</span>
           </button>
 
           <button
             onClick={toggleMusic}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all border cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-full text-[11px] font-medium tracking-wide uppercase transition-all border cursor-pointer ${
               isPlaying 
                 ? "bg-neon-purple/10 border-neon-purple/30 text-neon-purple" 
                 : "bg-white/5 border-white/10 text-gray-400"
@@ -148,22 +182,65 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-x-0 top-16 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-6 flex flex-col gap-4 shadow-2xl lg:hidden"
+            className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
+              showMusicPrompt ? "top-17 md:top-19" : "top-14"
+            }`}
           >
             <button
-              onClick={scrollToExploreFeed}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-full text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              onClick={() => scrollToSection("about-section")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Info className="w-4 h-4 text-purple-400" />
+              <span>About</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("explore-feed")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
             >
               <Globe2 className="w-4 h-4 text-neon-purple" />
               <span>Explore Feed</span>
             </button>
 
             <button
-              onClick={scrollToConfessionForm}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-full text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
+              onClick={() => scrollToSection("confession-input-form")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
             >
               <Heart className="w-4 h-4 fill-current" />
               <span>Confess Your Feeling</span>
+            </button>
+            
+
+            <button
+              onClick={() => scrollToSection("confession-tiers")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Layers className="w-4 h-4 text-neon-pink" />
+              <span>Confession Levels</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("memory-wall")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4 text-purple-400" />
+              <span>Memory Wall</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("midnight-quotes")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Moon className="w-4 h-4 text-indigo-400" />
+              <span>Midnight Quotes</span>
+            </button>
+
+            <button
+              onClick={() => scrollToSection("world-matrix")}
+              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+            >
+              <Globe2 className="w-4 h-4 text-neon-pink" />
+              <span>World Map</span>
             </button>
           </motion.div>
         )}
