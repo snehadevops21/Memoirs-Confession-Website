@@ -9,7 +9,7 @@ export default function Navbar() {
   const audioRef = useRef(null);
 
   const startMusic = () => {
-    setShowMusicPrompt(false); // Close banner immediately on first click
+    setShowMusicPrompt(false); 
     if (audioRef.current) {
       audioRef.current.play()
         .then(() => {
@@ -39,14 +39,16 @@ export default function Navbar() {
   };
 
   return (
-    <>
-      <AnimatePresence>
+<>
+      <AnimatePresence mode="wait">
         {showMusicPrompt && (
           <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
+            key="music-prompt-banner"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center overflow-hidden"
           >
             <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
             <span className="truncate">Want to immerse with ambient music?</span>
