@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { Heart, Globe2 } from "lucide-react";
 
 export default function Hero() {
   // Stagger variants to orchestrate child animations sequentially
@@ -124,6 +124,18 @@ export default function Hero() {
           <Heart className="w-4 h-4 fill-current" />
           <span>Confess Your Feeling</span>
         </button>
+
+        <button
+          onClick={() => {
+            const el = document.getElementById("explore-feed");
+            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-wider bg-white/5 border border-white/10 text-white shadow-md active:scale-95 transition-all cursor-pointer"
+        >
+          <Globe2 className="w-4 h-4 text-neon-purple" />
+          <span>Explore Feed</span>
+        </button>
+
       </div>
 
     </motion.div>
