@@ -54,7 +54,7 @@ export default function Navbar() {
               onClick={startMusic}
               className="bg-white text-gray-900 px-2.5 py-0.5 rounded-full font-semibold hover:bg-gray-100 transition-all cursor-pointer shadow-sm shrink-0"
             >
-              Play 🎵
+              Play Music 🎵
             </button>
             <button
               onClick={() => setShowMusicPrompt(false)}
