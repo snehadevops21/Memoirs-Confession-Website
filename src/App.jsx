@@ -13,7 +13,7 @@ import Footer from "./sections/Footer";
 
 
 function App() {
-  // Global state to track if background music is active
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (

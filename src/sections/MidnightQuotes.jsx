@@ -13,7 +13,7 @@ export default function MidnightQuotes() {
 
   const [index, setIndex] = useState(0);
 
-  // Automatically cycle through quotes every 5 seconds
+
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % quotes.length);

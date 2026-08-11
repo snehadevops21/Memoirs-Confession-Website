@@ -5,12 +5,12 @@ import { supabase } from "../config/supabaseClient"; // Import client
 
 
 export default function ExploreFeed() {
-  // Curated premium mock data array representing safe public secrets
+
   const [confessions, setConfessions] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All");
 
-  // Pagination States (Set to 5 items per page)
+  // Pagination States 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -37,7 +37,7 @@ export default function ExploreFeed() {
 
     fetchConfessions();
 
-    // OPTIONAL: Subscribe to real-time changes so feed updates instantly when anyone globally submits!
+  
     const channel = supabase
       .channel('schema-db-changes')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'confessions' }, payload => {
@@ -181,7 +181,7 @@ export default function ExploreFeed() {
 )}
 </div>
 
-              {/* Action Reactions Strip (Support Only, No Toxicity) */}
+             
               <div className="mt-6 pt-4 border-t border-white/0.03 flex items-center justify-between">
                 <span className="text-[10px] text-gray-500 font-mono tracking-widest uppercase flex items-center gap-1">
                   <MessageSquareHeart className="w-3 h-3 text-neon-purple" /> Gentle Space

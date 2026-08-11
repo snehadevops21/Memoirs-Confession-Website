@@ -41,7 +41,6 @@ export default function About() {
         </p>
       </motion.div>
 
-{/* 3 Columns in 1 Row Layout */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {cardData.map((card, index) => (
           <motion.div
@@ -54,7 +53,7 @@ export default function About() {
             className="p-8 rounded-3xl bg-white/0.02 border border-white/5 backdrop-blur-xl hover:border-white/10 hover:bg-white/0.04 transition-all duration-300 group shadow-2xl flex flex-col justify-between"
           >
             <div>
-              {/* Icon Box Container */}
+            
               <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-neon-purple/30 transition-all duration-300 shadow-inner">
                 {card.icon}
               </div>

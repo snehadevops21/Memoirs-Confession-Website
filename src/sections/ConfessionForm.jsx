@@ -155,20 +155,12 @@ const handleSubmit = async (e) => {
                   title="Open Map Grid"
                 >
 
-                  {/* Custom SVG mirroring image_3d6f45.png */}
-  <svg 
-    viewBox="0 0 24 24" 
-    className="w-5 h-5 group-hover:scale-110 transition-transform"
-    fill="none" 
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    {/* Thin Pin Needle */}
-    <line x1="12" y1="11" x2="12" y2="22" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round"/>
-    {/* Main Round Red/Pink Pin Head */}
-    <circle cx="12" cy="7" r="5" fill="#ec4899" />
-    {/* Inner Highlight Reflection */}
-    <circle cx="13.5" cy="5.5" r="1.2" fill="#fbcfe8" opacity="0.8" />
-  </svg>
+{/* Custom SVG mirroring image */}
+<img 
+  src="/logo.png" 
+  alt="Logo Pin" 
+  className="w-5 h-5 object-contain group-hover:scale-110 transition-transform" 
+/>
 
 
                 </button>

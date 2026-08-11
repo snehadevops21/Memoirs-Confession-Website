@@ -116,9 +116,7 @@ export default function Hero() {
             const el = document.getElementById("confession-input-form");
             if (el) {
               el.scrollIntoView({ behavior: "smooth", block: "start" });
-              // Optional: if your confession form has an internal trigger/state to open or focus:
-              // const inputField = el.querySelector("input, textarea");
-              // if (inputField) inputField.focus();
+
             }
           }}
           className="flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] active:scale-95 transition-all cursor-pointer"
