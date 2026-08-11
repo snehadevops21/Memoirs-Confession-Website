@@ -1,3 +1,5 @@
+Hero.jsx
+
 import { motion } from "framer-motion";
 import { Heart, Globe2 } from "lucide-react";
 

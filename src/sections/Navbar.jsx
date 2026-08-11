@@ -39,14 +39,17 @@ export default function Navbar() {
   };
 
   return (
-    <>
+    <header className="fixed top-0 left-0 w-full z-50 flex flex-col">
+      <audio ref={audioRef} loop src="/music.mp3" />
+
+      {/* Music Prompt Popup Banner */}
       <AnimatePresence>
         {showMusicPrompt && (
           <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -50, opacity: 0 }}
-            className="fixed top-0 left-0 w-full z-60 bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="w-full bg-linear-to-r from-neon-purple/95 via-neon-pink/95 to-purple-900/95 text-white px-4 py-2 flex items-center justify-center gap-2 shadow-lg backdrop-blur-md text-[11px] font-medium tracking-wide text-center overflow-hidden shrink-0"
           >
             <Sparkles className="w-3.5 h-3.5 animate-pulse shrink-0" />
             <span className="truncate">Want to immerse with ambient music?</span>
@@ -66,16 +69,8 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <motion.nav 
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed left-0 w-full z-50 px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b transition-all duration-300 ${
-          showMusicPrompt ? "top-8 md:top-10" : "top-0"
-        } bg-[#0b0f19]/80 border-white/5`}
-      >
-        <audio ref={audioRef} loop src="/music.mp3" />
-
+      {/* Main Navbar */}
+      <nav className="w-full px-4 py-3 md:px-12 flex items-center justify-between backdrop-blur-md border-b bg-[#0b0f19]/80 border-white/5 transition-all duration-300 relative">
         {/* Logo Area */}
         <div className="flex items-center gap-2 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src="logo.png" alt="Logo" className="h-8 w-auto md:h-10 object-contain" />
@@ -173,77 +168,75 @@ export default function Navbar() {
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>
         </div>
-      </motion.nav>
 
-      {/* Mobile Dropdown Drawer Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-x-0 z-40 bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden transition-all duration-300 ${
-              showMusicPrompt ? "top-17 md:top-19" : "top-14"
-            }`}
-          >
-            <button
-              onClick={() => scrollToSection("about-section")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+        {/* Mobile Dropdown Drawer Menu */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="absolute inset-x-0 top-full bg-[#0b0f19]/95 backdrop-blur-xl border-b border-white/10 p-5 flex flex-col gap-3 shadow-2xl lg:hidden"
             >
-              <Info className="w-4 h-4 text-purple-400" />
-              <span>About</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("about-section")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <Info className="w-4 h-4 text-purple-400" />
+                <span>About</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("explore-feed")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
-            >
-              <Globe2 className="w-4 h-4 text-neon-purple" />
-              <span>Explore Feed</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("explore-feed")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <Globe2 className="w-4 h-4 text-neon-purple" />
+                <span>Explore Feed</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("confession-input-form")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
-            >
-              <Heart className="w-4 h-4 fill-current" />
-              <span>Confess Your Feeling</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("confession-input-form")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-semibold uppercase bg-linear-to-r from-neon-purple to-neon-pink text-white shadow-md cursor-pointer"
+              >
+                <Heart className="w-4 h-4 fill-current" />
+                <span>Confess Your Feeling</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("confession-tiers")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
-            >
-              <Layers className="w-4 h-4 text-neon-pink" />
-              <span>Confession Levels</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("confession-tiers")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <Layers className="w-4 h-4 text-neon-pink" />
+                <span>Confession Levels</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("memory-wall")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
-            >
-              <BookOpen className="w-4 h-4 text-purple-400" />
-              <span>Memory Wall</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("memory-wall")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <BookOpen className="w-4 h-4 text-purple-400" />
+                <span>Memory Wall</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("midnight-quotes")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
-            >
-              <Moon className="w-4 h-4 text-indigo-400" />
-              <span>Midnight Quotes</span>
-            </button>
+              <button
+                onClick={() => scrollToSection("midnight-quotes")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <Moon className="w-4 h-4 text-indigo-400" />
+                <span>Midnight Quotes</span>
+              </button>
 
-            <button
-              onClick={() => scrollToSection("world-matrix")}
-              className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
-            >
-              <Globe2 className="w-4 h-4 text-neon-pink" />
-              <span>World Map</span>
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+              <button
+                onClick={() => scrollToSection("world-matrix")}
+                className="flex items-center gap-3 w-full py-2.5 px-4 rounded-xl text-xs font-medium uppercase bg-white/5 border border-white/10 text-white cursor-pointer"
+              >
+                <Globe2 className="w-4 h-4 text-neon-pink" />
+                <span>World Map</span>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
+    </header>
   );
 }

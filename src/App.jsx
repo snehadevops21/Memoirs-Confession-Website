@@ -18,8 +18,7 @@ function App() {
 
   return (
 <div className="min-h-screen bg-[#0b0f19] text-white selection:bg-neon-purple selection:text-white relative overflow-x-hidden">
-      {/* Navbar handles the fixed top banner and navigation */}
-      <Navbar />
+
       {/* Immersive Background Layer */}
       <AmbientBackground />
 
